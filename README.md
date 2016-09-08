@@ -81,6 +81,8 @@ Allowing a reader to select a specific airport and time frame make the visualiza
 
 ## Feedback
 
+### Draft 1
+
 After preparing an early draft of the visualization, I sent out a request for feedback on Facebook. The early draft had two input parameters: Airport and Timeframe based on the User Interface. Changing a parameter triggered a page refresh where the chart and input controls would be redrawn.
 
 Here is a link to a Plunker URL that hosts the original code:
@@ -94,6 +96,8 @@ Early comments:
 * From Dan - Why do you start the query at Chicago O'Hare? If the timeframe defaults to the entire year, why not show totals for all airports?
 * From Brandon - On many airports, the smaller airlines are tiny. It's impossible to see the ontime statistics.
 
+### Submission 1
+
 To address these issues, I added the following features:
 
 1. Abbreviated airline names to the first word in their name. (i.e. American Airlines -> American)
@@ -105,6 +109,8 @@ To address these issues, I added the following features:
 Here is a link to a Plunker URL that hosts the 1st submission code:
 
 [1st Submission](https://plnkr.co/edit/guZWcsDBUdvZvm8dAfWE?p=preview)
+
+### Submission 2
 
 After the 1st submission I added a narrative feature and a new OnTime Percents chart to visualization. Readers can now switch between a view of flight counts or a view of on-time percentage. This new view is extremely useful when comparing large and small carriers.
 
