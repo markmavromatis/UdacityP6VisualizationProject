@@ -1,0 +1,182 @@
+<!-- An online version of this page can be accessed on Plunker: https://plnkr.co/edit/jgJ0xviNmN3QDkMoz2l8?p=preview -->
+
+<html>
+<head>
+<title>Carrier OnTime Performance for Top 10 Airports</title>
+</head>
+
+<body>
+<div>
+<h2>Airline OnTime Performance at US Top10 Airports</h2>
+
+</div>
+<!-- <select id="airport" onchange="window.location.href='AirportCarrierStats.html?airport=' + this.value + '&timeframe=' + document.getElementById('timeframe').value" name="airport">
+ -->  
+<label>Airport: </label>
+<select id="airport" onChange="window.location.href=buildUrl()" name="airport">
+  <option id="ATL" value="ATL">Atlanta International</option>
+  <option id="ORD" value="ORD">Chicago O'Hare</option>
+  <option id="DFW" value="DFW">Dallas / Fort Worth</option>
+  <option id="DEN" value="DEN">Denver International</option>
+  <option id="IAH" value="IAH">Houston Intercontinental</option>
+  <option id="LAS" value="LAS">Las Vegas McCarran</option>
+  <option id="LAX" value="LAX">Los Angeles International</option>
+  <option id="MSP" value="MSP">Minneapolis St Paul</option>
+  <option id="PHX" value="PHX">Phoenix Sky Harbor</option>
+  <option id="SFO" value="SFO">San Francisco International</option>
+</select><br>
+<label>Timeframe: </label>
+<select id="timeframe" onchange="window.location.href=buildUrl()" name="timeframe">
+  <option id="annual" value="annual">Annual</option>
+  <option id="jan" value="jan">January</option>
+  <option id="feb" value="feb">February</option>
+  <option id="mar" value="mar">March</option>
+  <option id="apr" value="apr">April</option>
+  <option id="may" value="may">May</option>
+  <option id="jun" value="jun">June</option>
+  <option id="jul" value="jul">July</option>
+  <option id="aug" value="aug">August</option>
+  <option id="sep" value="sep">September</option>
+  <option id="oct" value="oct">October</option>
+  <option id="nov" value="nov">November</option>
+  <option id="dec" value="dec">December</option>
+</select>
+<div id="chartContainer">
+  <script src="lib/d3.v3.4.8.min.js"></script>
+  <script src="lib/dimple.v2.2.0.min.js"></script>
+  <script type="text/javascript">
+    function buildUrl() {
+      return `index.html?airport=${document.getElementById('airport').value}&timeframe=${document.getElementById('timeframe').value}`
+    }
+    function formatPercent(aPercentage) {
+      return (Math.round(aPercentage.toFixed(2) * 100)).toString() + "%"
+    }
+    // Copied from here: http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+    function formatLargeNumber(aNumber) {
+      // return Number(aNumber).toLocaleString();
+      return aNumber.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+    }
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split('&');
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split('=');
+            if (decodeURIComponent(pair[0]) == variable) {
+                return decodeURIComponent(pair[1]);
+            }
+        }
+        console.log('Query variable %s not found', variable);
+    }
+    var selectedAirport = getQueryVariable('airport');
+    var selectedTimeframe = getQueryVariable('timeframe');
+//    debugger;
+    // Set defaults if no airport or timeframe is selected
+    // (i.e. first time the page is open)
+    if (!selectedAirport) {selectedAirport = 'ATL';}
+    if (!selectedTimeframe) {selectedTimeframe = 'annual';}
+    console.log("Selected airport is: " + selectedAirport);
+    document.getElementById(selectedAirport).selected=true;
+    document.getElementById(selectedTimeframe).selected=true;
+    var svg = dimple.newSvg("#chartContainer", 590, 400);
+    var filename = `data/airport_carrier_stats_${selectedTimeframe}.csv`
+//    debugger;
+    d3.csv(filename, function (data) {
+      data2 = data.filter(function(row) {
+        return row['Origin'] === selectedAirport;
+      })
+      console.log("Data rows = " + data.length);
+      console.log("Filtered rows = " + data2.length);
+      // console.log("Airport argument is: " + get('airport'));
+//      console.log(window.location.search);
+//      debugger;
+      var myChart = new dimple.chart(svg, data2);
+      myChart.setBounds(60, 45, 510, 315);
+      myChart.addCategoryAxis("x", "CarrierName");
+      myChart.addMeasureAxis("y", "Count");
+      var series = myChart.addSeries(["RecordType"], dimple.plot.bar);
+      myChart.addLegend(200, 10, 380, 20, "right");
+      series.getTooltipText = function(e) {
+        var key = e.key;
+        console.log("KEY = " + key);
+        var fields = key.split("_");
+        var recordType = fields[0];
+        var carrier = fields[1];
+        var returnValue = "";
+        if (recordType === "OnTime") {
+          returnValue = [`On-Time Flights = ${formatLargeNumber(e.yValue)}`];
+        } else {
+          var filtered = data2.filter(function(row) {
+            return row['RecordType'] === 'Delayed' && row['CarrierName'] === carrier;
+          })
+          var ontimeFilter = data2.filter(function(row) {
+            return row['RecordType'] === 'OnTime' && row['CarrierName'] === carrier;
+          })
+          var ontimeFlights = ontimeFilter.reduce(function(a, b) {
+            return a + parseFloat(b['Count']);
+          }, 0);
+          var delayedFlights = e.yValue;
+          console.log(`Delayed flights = ${delayedFlights}`)
+          console.log(`On-Time flights = ${ontimeFlights}`)
+          var totalFlights = ontimeFlights + delayedFlights;
+          var delayedPercent = delayedFlights / totalFlights; 
+          // debugger;
+          var delayedMins = filtered.reduce(function(a, b) {
+            return a + parseFloat(b['ArrDelayMins']);
+          }, 0);
+          var carrierDelayMins = filtered.reduce(function(a, b) {
+            return a + parseFloat(b['CarrierDelayMins']);
+          }, 0);
+          console.log("Delayed mins = " + delayedMins)
+          console.log("Carrier Delay mins = " + carrierDelayMins)
+          var weatherDelayMins = filtered.reduce(function(a, b) {
+            return a + parseFloat(b['WeatherDelayMins']);
+          }, 0);
+          var nasDelayMins = filtered.reduce(function(a, b) {
+            return a + parseFloat(b['NasDelayMins']);
+          }, 0);
+          var securityDelayMins = filtered.reduce(function(a, b) {
+            return a + parseFloat(b['SecurityDelayMins']);
+          }, 0);
+          var lateAircraftDelayMins = filtered.reduce(function(a, b) {
+            return a + parseFloat(b['LateAircraftDelayMins']);
+          }, 0);
+          // debugger;
+          returnValue = [`Delayed Flights = ${formatLargeNumber(e.yValue)} (${formatPercent(delayedPercent)})`,
+            `Carrier Delay = ${formatPercent(carrierDelayMins / delayedMins)}`,
+            `Weather Delay = ${formatPercent(weatherDelayMins / delayedMins)}`,
+            `NAS Delay = ${formatPercent(nasDelayMins / delayedMins)}`,
+            `Security Delay = ${formatPercent(securityDelayMins / delayedMins)}`,
+            `Late Aircraft Delay = ${formatPercent(lateAircraftDelayMins / delayedMins)}`
+            ];
+        }
+        return returnValue;
+      };
+      myChart.draw();
+    });
+  </script>
+</div>
+<div>
+<p>
+<p>Carrier On-Time Performance for America's Top 10 Airports
+
+Based on domestic departures
+US Department of Transportation - Bureau of Transportation Statistics</p>
+
+
+Some observations:<br>
+<UL>
+  <LI>
+  Flight delays are not consistent across carriers (even at the same airport in the same month). Some carriers are 'worse' than others.<br>
+  </LI>
+  <LI>
+  Cold weather not always a lead factor in flight delays. United Airlines performance at Chicago in June was abysmal. 41% of the flights were delayed versus 29% in cold Chicago January!
+  </LI>
+  <LI>
+  As much as people complain about time spent in airport security, security is rarely a factor in flight delays.
+  </LI>
+
+</p>
+</div>
+</body>
+
+</html>

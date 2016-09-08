@@ -62,22 +62,30 @@ I wanted to use a simple API that would let me create a visually appealing bar c
 
 With simple APIs, I could focus more time on interactivity features rather than building a complex chart.
 
+Due to mergers, there are not many US airlines left. Most of the large airports had 10-15 airlines. To communicate on-time performance, I thought that a stacked bar chart would be best. The chart would compare airlines along a category X axis with on-time flights and delayed flights shown on the Y-axis. To communicate details (on-time percentages and reasons for delays), I thought it best to use tooltips on each data point (stack).
+
+On the Y-axis, I feel that the number of flights are more meaningful than showing percentages. If a small airline only serves a couple of destination, than regardless of its stellar ontime percentage, most passengers may not have use for its services. Most people are interested in be interested in on-time percentage at larger carriers. A stacked bar chart effectively communicates both totals and percentages in a single view for all airlines.
+
 ### User Interface
 
 This assignment is about creating a visualization with a hybrid narrative that is both author-driven and reader-driven. By keeping the user interface simple, I felt that I could present a story at a high level summary view (annual data) then allowing readers to filter that data to airports of interest or a specific timeframe. I would like my readers to answer questions such as:
 
-"Which airlines are the largest?"
-"Which airlines have the best on-time percentages?"
-"Which airlines fly out of my airport?"
-"Which airines have the best on-time percentage at my airport?"
-"Which airines fly the most often at my airport?"
-"If I have to fly through a hub airport in January, which one should I use? Does it make a difference?"
+* *"Which airlines are the largest?"*
+* *"Which airlines have the best on-time percentages?"*
+* *"Which airlines fly out of my airport?"*
+* *"Which airines have the best on-time percentage at my airport?"*
+* *"Which airines fly the most often at my airport?"*
+* *"If I have to fly through a hub airport in January, which one should I use? Does it make a difference?"*
 
 Allowing a reader to select a specific airport and time frame make the visualization personal and more useful.
 
 ## Feedback
 
 After preparing an early draft of the visualization, I sent out a request for feedback on Facebook. The early draft had two input parameters: Airport and Timeframe based on the User Interface. Changing a parameter triggered a page refresh where the chart and input controls would be redrawn.
+
+Here is a link to a Plunker URL that hosts the original code:
+
+[First Draft](https://plnkr.co/edit/jgJ0xviNmN3QDkMoz2l8?p=preview)
 
 Early comments:
 
@@ -94,9 +102,21 @@ To address these issues, I added the following features:
 4. Added a zoom slider control so that readers can zoom into a chart (reduce the scale) to see smaller airlines.
 5. Added a new "All Airports" airport option and made this the default. The visualization now starts off with data on all flights departing from all top 10 airports.
 
+Here is a link to a Plunker URL that hosts the 1st submission code:
+
+[1st Submission](https://plnkr.co/edit/guZWcsDBUdvZvm8dAfWE?p=preview)
+
+After the 1st submission I added a narrative feature and a new OnTime Percents chart to visualization. Readers can now switch between a view of flight counts or a view of on-time percentage. This new view is extremely useful when comparing large and small carriers.
+
+The narrative appears on the top of the page with a blue background. During testing, I found that a long narrative is annoying if a user cannot exit the narrative and access the visualization immediately. Instead, I offer the reader a choice to hide the narrative (and freely explore the data) or page through the text. 
+
+Here is a link to a Plunker URL that hosts the 2nd submission code.
+
+[2nd Submission](https://plnkr.co/edit/HKbjNBnWf4FOxBQQy8Ap?p=preview)
+
 ## Resources
 
-[DimpleJS](http://dimplejs.org) - JavaScript-based Visualization API for creating charts
-[StackOverflow](http://www.stackoverflow.com/) - General source for troubleshooting JavaScript and Dimple issues
-[Research and Innovative Technology Administration](http://www.rita.dot.gov) - Website that hosts the flight data used for this visualization.
+* [DimpleJS](http://dimplejs.org) - JavaScript-based Visualization API for creating charts
+* [StackOverflow](http://www.stackoverflow.com/) - General source for troubleshooting JavaScript and Dimple issues
+* [Research and Innovative Technology Administration](http://www.rita.dot.gov) - Website that hosts the flight data used for this visualization.
 

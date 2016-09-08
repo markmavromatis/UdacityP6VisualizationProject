@@ -1,0 +1,58 @@
+[
+{
+	"title" : "Large Airlines and Performance",
+	"text" : "America's major airlines are larger than ever! Large airports keep getting larger as well!<br> How do the largest airlines compare against their peers for on-time performance? Do large airlines have the best on-time statistics?<br>&nbsp;<br>Click 'Next' to read more or 'Hide Narrative' to query airports, airlines, and on-time performance yourself!",
+	"airport" : "000",
+	"timeframe" : "annual",
+	"chartmode" : "size"},
+{
+	"title" : "Delta is #1",
+	"text" : "Delta Airlines is America's largest carrier with 400,000 domestic flights from the 10 largest airports. How does its on-time percentage compare to its competitors?",
+	"airport" : "000",
+	"timeframe" : "annual",
+	"chartmode" : "size"
+},
+{
+	"title" : "On-Time Leaders",
+	"text" : "The #12 carrier, Alaska Airlines, leads in on-time percentage at 87% with Delta close behind at 86%. US Airways is 3rd at 83%. There does not seem to be much correlation between carrier size and on-time percentage. Perhaps some carriers are just better at managing their schedules.<br>How do carriers do at their central hubs? Do they have better on-time percentages than their competitors here?",
+	"airport" : "000",
+	"timeframe" : "annual",
+	"chartmode" : "percent"
+},
+{
+	"title" : "Hartsfield-Jackson Atlanta International",
+	"text": "Hartsfield-Jackson Atlanta International Airport is the world's busiest airport. Delta has a large hub here. At this airport, Delta does have the best on-time percent of all domestic airlines.",
+	"airport" : "ATL",
+	"timeframe" : "annual",
+	"chartmode" : "percent"
+},
+{
+	"title" : "Dallas Fort-Worth Airport",
+	"text" : "Dallas Fort-Worth Airport is an American Airlines hub. Here, Alaska Airlines, Delta Airlines, and US Airways all have better on-time records.",
+	"airport" : "DFW",
+	"timeframe" : "annual",
+	"chartmode" : "percent"
+},
+{
+	"title" : "Phoenix Sky Harbor International Airport",
+	"text" : "Phoenix is a Southwest Airlines hub. Despite being a smaller airport, the on-time records look similar to other airports. Delta, Alaska, and US Airways all have better on-time percentages.",
+	"airport" : "PHX",
+	"timeframe" : "annual",
+	"chartmode" : "percent"
+},
+{
+	"title" : "Spirit Airlines has poor on-time statistics",
+	"text" : "Spirit Airlines is a low-cost carrier infamous for its lack of frills and customer service. It performs quite poorly in on-time performance compared to other airlines. In June, its on-time percentage at Chicago O'Hare airport was less than 40%!",
+	"airport" : "ORD",
+	"timeframe" : "month6",
+	"chartmode" : "percent"
+},
+{
+	"title" : "Free Time",
+	"text" : "Which carriers serve your favorite airport?<br>How do they perform against others?<br>Click 'Hide Narrative' to continue exploring airports and airline statistics. Some observations are noted below. Next time you fly, compare airlines and airports before booking that ticket to reduce your risk of missing that connecting flight!",
+	"airport" : "000",
+	"timeframe" : "annual",
+	"chartmode" : "size"
+}
+
+]

@@ -1,0 +1,23 @@
+div.story-visible {
+	background-color: lightblue;
+	height: 10em; 
+}
+
+div.story-invisible {
+	background-color: lightblue;
+	height: 0em;
+}
+
+div.disabled {
+	background-color: lightgrey;
+}
+
+
+button {
+	font-size: 100%;
+}
+
+button:hover:enabled {
+	background-color: #cfd8dc;
+}
+
